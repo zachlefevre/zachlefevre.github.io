@@ -1,0 +1,93 @@
+* Introduction
+
+In typeclass oriented languages there exist a concept called a Summoner.
+A Summoner is something which can fetch a typeclass from the environment.
+
+** What is a Typeclass?
+
+A typeclass is a unit of behavior which is *attached to a piece of data externally*.
+
+For example, in Python I might say something supports + by defining __add__
+
+#+begin_src python
+class Person:
+    def __init__(self, name, age, parents = None):
+        self.name = name
+        self.age = age
+        self.parent = None
+
+    def __add__(self, other):
+        return Person("Jeremy", 0, [self, other])
+#+end_src
+
+Now, this is a bad and insufficient definition for a million different reasons, but its good enough for teaching.
+This says a Person can be added to something else and it'll produce another person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
+
+In a language like Scala (or Haskell or Rust) we'd declare this ability-to-add externally.
+#+begin_src scala
+trait Addable[T] {
+  def add(left: T, right: T);
+}
+
+case class Person(name: String, age: String, parents: List[Person])
+
+implicit val personAddable = new Addable[Person] { override def add(left: Person, right: Person) = Person("Jeremy", 0, List(left, right))}
+#+end_src
+
+Notice I'm attaching the "You can add Persons" behavior *after* I've created the Person class and *outside* the Person class definition.
+Now, anywhere I need some type which can be added I can pass around Person instances.
+
+One thing I like about Scala's implementation is you can have *multiple* implementations of Addable[T] for any type T. This is explicitly disallowed in Haskell and Rust for coherence and optimization reasons.
+
+In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
+
+
+* Summoners in Scala
+
+In Scala I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes I'll define my own and call it `summon`.
+#+begin_src scala
+def summon[T](implicit t: T) = t
+#+end_src
+
+and then I can invoke this to fetch types from the implicit scope and make them explicit.
+
+#+begin_src scala
+val personAddable = summon[Addable[Person]]()
+personAddable.add(Person(...), Person(...))
+#+end_src
+
+Notice that since personAddable is just a trait instance (just a regular ol' object) I can access its fields like any other piece of data.
+
+* Summoners in Rust
+
+Things are a little different in Rust. Rust does not support first class typeclasses. I cannot pass around typeclass instances as data, I cannot define multiple implementations of a typeclass for any single type, nor can I define typeclasses over typeclass instances.
+
+But I can fetch a typeclass into an object for the sake of invoking its methods as static functions!
+
+#+begin_src rust
+use std::ops::*;
+let result = <i32 as Mul<i32>>::mul(2, 3);
+dbg!(result);
+
+let v = vec![1, 2, 3, 2, 1];
+let result = <Vec<i32> as Index<usize>>::index(&v, 1);
+dbg!(result);
+#+end_src
+
+#+RESULTS:
+: [src/main.rs:5:1] result = 6
+: [src/main.rs:9:1] result = 2
+
+In Rust src_rust[:exports code]{<i32 as Mul<i32>>} and src_rust[:exports code]{<Vec<i32> as Index<usize>>} are my summoners.
+It can be read as "From the type i32 give me the behavior for how to multiply it to another i32" and "From a Vec<i32> give me the behavior for how to fetch the nth element".
+
+Notice I am *required* to immediately invoke mul and index. I am not able to save the typeclass instance itself into a variable.
+
+In both Scala and Rust I'm not allowed to summon a typeclass that does not exist.
+
+#+begin_src rust
+<i32 as Mul<Boolean>>::mul(2, True); // *fails*
+#+end_src
+
+#+RESULTS:
+: error: Could not compile `cargoJ35hco`.

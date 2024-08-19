@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-08-19 Mon 10:51 -->
+<!-- 2024-08-19 Mon 10:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -196,22 +196,160 @@
 </head>
 <body>
 <div id="content" class="content">
-
-<div id="outline-container-org18ce9d4" class="outline-2">
-<h2 id="org18ce9d4"><span class="section-number-2">1.</span> Posts</h2>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org8900785">1. Introduction</a>
+<ul>
+<li><a href="#orga165764">1.1. What is a Typeclass?</a></li>
+</ul>
+</li>
+<li><a href="#orgcadbf72">2. Summoners in Scala</a></li>
+<li><a href="#org48e70f8">3. Summoners in Rust</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8900785" class="outline-2">
+<h2 id="org8900785"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+In typeclass oriented languages there exist a concept called a Summoner.
+A Summoner is something which can fetch a typeclass from the environment.
+</p>
 </div>
-<div id="outline-container-org8eb6a89" class="outline-3">
-<h3 id="org8eb6a89"><span class="section-number-3">1.1.</span> <a href="posts/type_state/type_state.html">Type State</a></h3>
+
+<div id="outline-container-orga165764" class="outline-3">
+<h3 id="orga165764"><span class="section-number-3">1.1.</span> What is a Typeclass?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+A typeclass is a unit of behavior which is <b>attached to a piece of data externally</b>.
+</p>
+
+<p>
+For example, in Python I might say something supports + by defining <span class="underline"><span class="underline">add</span></span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">class Person:
+    def __init__(self, name, age, parents = None):
+        self.name = name
+        self.age = age
+        self.parent = None
+
+    def __add__(self, other):
+        return Person("Jeremy", 0, [self, other])
+</pre>
 </div>
-<div id="outline-container-orge8fb9d3" class="outline-3">
-<h3 id="orge8fb9d3"><span class="section-number-3">1.2.</span> <a href="posts/summoners/summoners.html">Typeclass Summoners in Rust and Scala</a></h3>
+
+<p>
+Now, this is a bad and insufficient definition for a million different reasons, but its good enough for teaching.
+This says a Person can be added to something else and it'll produce another person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
+</p>
+
+<p>
+In a language like Scala (or Haskell or Rust) we'd declare this ability-to-add externally.
+</p>
+<div class="org-src-container">
+<pre class="src src-scala">trait Addable[T] {
+  def add(left: T, right: T);
+}
+
+case class Person(name: String, age: String, parents: List[Person])
+
+implicit val personAddable = new Addable[Person] { override def add(left: Person, right: Person) = Person("Jeremy", 0, List(left, right))}
+</pre>
+</div>
+
+<p>
+Notice I'm attaching the "You can add Persons" behavior <b>after</b> I've created the Person class and <b>outside</b> the Person class definition.
+Now, anywhere I need some type which can be added I can pass around Person instances.
+</p>
+
+<p>
+One thing I like about Scala's implementation is you can have <b>multiple</b> implementations of Addable[T] for any type T. This is explicitly disallowed in Haskell and Rust for coherence and optimization reasons.
+</p>
+
+<p>
+In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgcadbf72" class="outline-2">
+<h2 id="orgcadbf72"><span class="section-number-2">2.</span> Summoners in Scala</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In Scala I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes I'll define my own and call it `summon`.
+</p>
+<div class="org-src-container">
+<pre class="src src-scala">def summon[T](implicit t: T) = t
+</pre>
+</div>
+
+<p>
+and then I can invoke this to fetch types from the implicit scope and make them explicit.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scala">val personAddable = summon[Addable[Person]]()
+personAddable.add(Person(...), Person(...))
+</pre>
+</div>
+
+<p>
+Notice that since personAddable is just a trait instance (just a regular ol' object) I can access its fields like any other piece of data.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org48e70f8" class="outline-2">
+<h2 id="org48e70f8"><span class="section-number-2">3.</span> Summoners in Rust</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Things are a little different in Rust. Rust does not support first class typeclasses. I cannot pass around typeclass instances as data, I cannot define multiple implementations of a typeclass for any single type, nor can I define typeclasses over typeclass instances.
+</p>
+
+<p>
+But I can fetch a typeclass into an object for the sake of invoking its methods as static functions!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rust">use std::ops::*;
+let result = &lt;i32 as Mul&lt;i32&gt;&gt;::mul(2, 3);
+dbg!(result);
+
+let v = vec![1, 2, 3, 2, 1];
+let result = &lt;Vec&lt;i32&gt; as Index&lt;usize&gt;&gt;::index(&amp;v, 1);
+dbg!(result);
+</pre>
+</div>
+
+<p>
+In Rust <code class="src src-rust">&lt;i32 as Mul&lt;i32&gt;&gt;</code> and <code class="src src-rust">&lt;Vec&lt;i32&gt; as Index&lt;usize&gt;&gt;</code> are my summoners.
+It can be read as "From the type i32 give me the behavior for how to multiply it to another i32" and "From a Vec&lt;i32&gt; give me the behavior for how to fetch the nth element".
+</p>
+
+<p>
+Notice I am <b>required</b> to immediately invoke mul and index. I am not able to save the typeclass instance itself into a variable.
+</p>
+
+<p>
+In both Scala and Rust I'm not allowed to summon a typeclass that does not exist.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rust">&lt;i32 as Mul&lt;Boolean&gt;&gt;::mul(2, True); // *fails*
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Zlef</p>
-<p class="date">Created: 2024-08-19 Mon 10:51</p>
+<p class="date">Created: 2024-08-19 Mon 10:47</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
