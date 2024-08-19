@@ -39,7 +39,7 @@ Now, anywhere I need some type which can be added I can pass around Person insta
 
 One thing I like about Scala's implementation is you can have *multiple* implementations of Addable[T] for any type T. This is explicitly disallowed in Haskell and Rust for coherence and optimization reasons.
 
-In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
+In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!*. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
 
 
 * Summoners in Scala
