@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-08-20 Tue 10:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="Zlef" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org792ab75">1. Introduction</a>
+<ul>
+<li><a href="#org948e633">1.1. What is Laziness?</a></li>
+<li><a href="#org4947b73">1.2. Separating generation from exploration</a></li>
+</ul>
+</li>
+<li><a href="#org1f2cb32">2. Lazy Fib</a></li>
+<li><a href="#org3677b6c">3. Lazy Stock Picker Using Kadane's Algorithm</a></li>
+<li><a href="#orgc2c3665">4. Alright, here comes the manifesto</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org792ab75" class="outline-2">
+<h2 id="org792ab75"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org948e633" class="outline-3">
+<h3 id="org948e633"><span class="section-number-3">1.1.</span> What is Laziness?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Laziness is a langauge feature which allows programs to express suspended computation.
+</p>
+
+<p>
+For example
+</p>
+<div class="org-src-container">
+<pre class="src src-python">a = some_really_expensive_computation() # This is *not* lazy
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">a = lambda: some_really_expensive_computation() # This *is* lazy
+</pre>
+</div>
+
+<p>
+Notice in the second example we do not perform the expensive computation. We can, in fact, choose to <b>never</b> perform the expensive computation.
+There are many situations where we otherwise throw out expensive computation.
+</p>
+
+<p>
+For example
+</p>
+<div class="org-src-container">
+<pre class="src src-python">a = some_really_expensive_computation()
+
+if some_boolean:
+    return a
+else:
+    return False
+</pre>
+</div>
+
+<p>
+Notice we've <b>performed</b> the expensive computation even though, under some conditions, we throw the results out.
+</p>
+
+<p>
+It would have been better to <b>not</b> perform the expensive computation and, instead, saved a <b>suspended computation</b> that can be reified later <b>IFF</b> it is wanted. 
+</p>
+
+<p>
+The motivating example being &#x2013; Functions are simply called. A function does not have the context to know when the work it's doing will <b>actually</b> be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the <b>caller</b> can decide if the computation needs to happen. As it goes the caller can itself decide that it is not qualified to decide it the expensive computation needs to happen, and so forth until the some root executive function, which knows <b>precisely what results are needed to produce the program output</b>, decides what computation needs to take place.
+If you take this idea to the logical extreme <b>everything</b> ends up being a lazy suspended computation and your langauge is itself <b>lazy</b>. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
+</p>
+
+<p>
+Another motivating example would be &#x2013; Functions do not necessarily have the context to decide <b>where</b> computation should take place. Is it better to perform this work on my primary thread pool? What about my UI event loop? Functions should <b>do or delgate but never both</b>.
+some<sub>really</sub><sub>expensive</sub><sub>computation</sub> is <b>doing</b> the work. It should not be polluted with arguments to also inform it <b>where</b> the work should happen. Otherwise we end up with really ugly signatures like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">def some_really_expensive_computation(thread_pool, condition_under_which_we_run_on_main_pool, condition_under_which_we_run_on_IO_bound_pool, some_predicate_to_decide_if_main_pool_is_overloaded, etc...):
+</pre>
+</div>
+
+<p>
+Not to mention it has to actually <b>do the work</b>. We've overloaded this function to be overly complex.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4947b73" class="outline-3">
+<h3 id="org4947b73"><span class="section-number-3">1.2.</span> Separating generation from exploration</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Maybe that last motivating example was not very motivating. I don't blame you. Here's something more concrete.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">def fibs(amount):
+    curr, next = 1, 1
+    out = []
+    so_far = 0
+    while so_far &lt;= amount:
+        out.append(curr)
+        curr, next = next, curr + next
+        so_far += 1
+    return out
+</pre>
+</div>
+
+<p>
+Look at this sad little python function. It has so much on its plate. It needs to account for generating fib (no easy task), while also ensuring it only computes as much of the fib sequence as the caller cares about. It's <b>doing</b> a lot. Maybe it should <b>delgate</b>.
+</p>
+
+<p>
+Not only that, but this function is not able to accomodate the various needs of all callers.
+</p>
+<ul class="org-ul">
+<li>A caller which <b>only</b> needs the nth fib, not the entire sequence, will have wasted memory storing the entire "out" list</li>
+<li>A caller which wants every other fib will also need to have generated the entire list.</li>
+<li>A caller which generates 10 fibs, then later decides it needed 20, will need to throw away the 10 and start the computation over.</li>
+<li>etc</li>
+</ul>
+
+<p>
+Ideally we will have one mechanism for generating fibs and another <b>separate</b> mechanism for exploring that generated space and doing whatever it wants with the results.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f2cb32" class="outline-2">
+<h2 id="org1f2cb32"><span class="section-number-2">2.</span> Lazy Fib</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-python">def fibs(amount):
+    curr, next = 1, 1
+    while True:
+        yield curr
+        curr, next = next, curr + next
+</pre>
+</div>
+
+<p>
+Ah, that's better.
+Now the caller can <b>choose</b> to pack the generated values into a list if it wants.
+Alternatively, if it only wants a particular fib value it can do so without incurring any additional memory cost.
+</p>
+
+<p>
+The generator (the fib function itself) does its single job really well. It generates fib values. The caller can decide how it wants to traverse this search space and what it wants to do with the elements.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3677b6c" class="outline-2">
+<h2 id="org3677b6c"><span class="section-number-2">3.</span> Lazy Stock Picker Using Kadane's Algorithm</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Suppose we want to compute the best time to have purchased and sold a stock. The usual implementation is Kadane's Algorithm. 
+</p>
+
+<p>
+Here I'll implement it lazily using suspended computation
+</p>
+<div class="org-src-container">
+<pre class="src src-python">def stock_pick(prices):
+    buy_date = 0
+    for sell_date in range(len(stocks)):
+        if stocks[sell_date] &lt; stocks[buy_date]:
+            sell_date = buy_date
+        yield sell_date, buy_date
+</pre>
+</div>
+
+<p>
+Here the caller can:
+</p>
+<ul class="org-ul">
+<li><b>Observe</b> how the algorithm runs. What decisions did it make along the way?</li>
+<li><b>Decide</b> to stop iterating when a particular threshold was met.</li>
+<li>Choose to pack the result set into a list for later processing.</li>
+<li>Choose to pack the reuslt into a dictionary/any other data struture.</li>
+<li>Choose to only select the best buy and sell date without incurring any additional memory cost.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgc2c3665" class="outline-2">
+<h2 id="orgc2c3665"><span class="section-number-2">4.</span> Alright, here comes the manifesto</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Functions <b>cannot</b> know the context they're running in.
+</p>
+
+<p>
+Functions need to be able to compose with other behavior without being polluted with that other behavior's details.
+</p>
+
+<p>
+As a caller I should be able to decide, dynamically, what <b>effects</b> the sub-computations of my callees run in:
+</p>
+<ul class="org-ul">
+<li>What exception handlers are wrapping behavior</li>
+<li>What thread pool the computation runs in</li>
+<li>What dependencies the computation runs with</li>
+</ul>
+<p>
+And it should be able to do wo without polluting that function with all the parameters required to make all those decisions itself.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Zlef</p>
+<p class="date">Created: 2024-08-20 Tue 10:14</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

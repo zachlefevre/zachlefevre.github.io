@@ -1,0 +1,118 @@
+* Introduction
+
+** What is Laziness?
+
+Laziness is a langauge feature which allows programs to express suspended computation.
+
+For example
+#+begin_src python
+a = some_really_expensive_computation() # This is *not* lazy
+#+end_src
+
+#+begin_src python
+a = lambda: some_really_expensive_computation() # This *is* lazy
+#+end_src
+
+Notice in the second example we do not perform the expensive computation. We can, in fact, choose to *never* perform the expensive computation.
+There are many situations where we otherwise throw out expensive computation.
+
+For example
+#+begin_src python
+a = some_really_expensive_computation()
+
+if some_boolean:
+    return a
+else:
+    return False
+#+end_src
+
+Notice we've *performed* the expensive computation even though, under some conditions, we throw the results out.
+
+It would have been better to *not* perform the expensive computation and, instead, saved a *suspended computation* that can be reified later *IFF* it is wanted. 
+
+The motivating example being -- Functions are simply called. A function does not have the context to know when the work it's doing will *actually* be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the *caller* can decide if the computation needs to happen. As it goes the caller can itself decide that it is not qualified to decide it the expensive computation needs to happen, and so forth until the some root executive function, which knows *precisely what results are needed to produce the program output*, decides what computation needs to take place.
+If you take this idea to the logical extreme *everything* ends up being a lazy suspended computation and your langauge is itself *lazy*. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
+
+Another motivating example would be -- Functions do not necessarily have the context to decide *where* computation should take place. Is it better to perform this work on my primary thread pool? What about my UI event loop? Functions should *do or delgate but never both*.
+some_really_expensive_computation is *doing* the work. It should not be polluted with arguments to also inform it *where* the work should happen. Otherwise we end up with really ugly signatures like:
+
+#+begin_src python
+def some_really_expensive_computation(thread_pool, condition_under_which_we_run_on_main_pool, condition_under_which_we_run_on_IO_bound_pool, some_predicate_to_decide_if_main_pool_is_overloaded, etc...):
+#+end_src
+
+Not to mention it has to actually *do the work*. We've overloaded this function to be overly complex.
+
+** Separating generation from exploration
+
+Maybe that last motivating example was not very motivating. I don't blame you. Here's something more concrete.
+
+#+begin_src python
+def fibs(amount):
+    curr, next = 1, 1
+    out = []
+    so_far = 0
+    while so_far <= amount:
+        out.append(curr)
+        curr, next = next, curr + next
+        so_far += 1
+    return out
+#+end_src
+
+Look at this sad little python function. It has so much on its plate. It needs to account for generating fib (no easy task), while also ensuring it only computes as much of the fib sequence as the caller cares about. It's *doing* a lot. Maybe it should *delgate*.
+
+Not only that, but this function is not able to accomodate the various needs of all callers.
+- A caller which *only* needs the nth fib, not the entire sequence, will have wasted memory storing the entire "out" list
+- A caller which wants every other fib will also need to have generated the entire list.
+- A caller which generates 10 fibs, then later decides it needed 20, will need to throw away the 10 and start the computation over.
+- etc
+
+Ideally we will have one mechanism for generating fibs and another *separate* mechanism for exploring that generated space and doing whatever it wants with the results.
+
+* Lazy Fib
+#+begin_src python
+def fibs(amount):
+    curr, next = 1, 1
+    while True:
+        yield curr
+        curr, next = next, curr + next
+#+end_src
+
+Ah, that's better.
+Now the caller can *choose* to pack the generated values into a list if it wants.
+Alternatively, if it only wants a particular fib value it can do so without incurring any additional memory cost.
+
+The generator (the fib function itself) does its single job really well. It generates fib values. The caller can decide how it wants to traverse this search space and what it wants to do with the elements.
+
+* Lazy Stock Picker Using Kadane's Algorithm
+
+Suppose we want to compute the best time to have purchased and sold a stock. The usual implementation is Kadane's Algorithm. 
+
+Here I'll implement it lazily using suspended computation
+#+begin_src python
+def stock_pick(prices):
+    buy_date = 0
+    for sell_date in range(len(stocks)):
+        if stocks[sell_date] < stocks[buy_date]:
+            sell_date = buy_date
+        yield sell_date, buy_date
+#+end_src
+
+Here the caller can:
+- *Observe* how the algorithm runs. What decisions did it make along the way?
+- *Decide* to stop iterating when a particular threshold was met.
+- Choose to pack the result set into a list for later processing.
+- Choose to pack the reuslt into a dictionary/any other data struture.
+- Choose to only select the best buy and sell date without incurring any additional memory cost.
+
+
+* Alright, here comes the manifesto
+
+Functions *cannot* know the context they're running in.
+
+Functions need to be able to compose with other behavior without being polluted with that other behavior's details.
+
+As a caller I should be able to decide, dynamically, what *effects* the sub-computations of my callees run in:
+- What exception handlers are wrapping behavior
+- What thread pool the computation runs in
+- What dependencies the computation runs with
+And it should be able to do wo without polluting that function with all the parameters required to make all those decisions itself.

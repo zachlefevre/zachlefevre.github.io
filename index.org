@@ -3,6 +3,7 @@
 * Posts
 ** [[file:posts/type_state/type_state.html][Type State]]
 ** [[file:posts/summoners/summoners.html][Typeclass Summoners in Rust and Scala]]
+** [[file:posts/laziness_python_generators/lazy_python_generator_kadane_algorithm.html][Lazy Python for Kadane's Algorithm. Also a touch of Effect Systems]]
 * Myself
 ** [[https://github.com/zachlefevre][github]]
 ** email: public@zacharylefevre.com

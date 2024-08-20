@@ -20,6 +20,8 @@ class Person:
         return Person("Jeremy", 0, [self, other])
 #+end_src
 
+#+RESULTS:
+
 Now, this is a bad and insufficient definition for a million different reasons, but it's good enough for teaching.
 This says a Person can be added to something else and it'll produce another Person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
 
