@@ -1,13 +1,13 @@
 * Introduction
 
-In typeclass oriented languages there exist a concept called a Summoner.
+In typeclass oriented languages, there exists a concept called a Summoner.
 A Summoner is something which can fetch a typeclass from the environment.
 
 ** What is a Typeclass?
 
 A typeclass is a unit of behavior which is *attached to a piece of data externally*.
 
-For example, in Python I might say something supports + by defining __add__
+For example, in Python I might say something supports + by defining src_rust[:exports code]{__add__}.
 
 #+begin_src python
 class Person:
@@ -20,13 +20,13 @@ class Person:
         return Person("Jeremy", 0, [self, other])
 #+end_src
 
-Now, this is a bad and insufficient definition for a million different reasons, but its good enough for teaching.
-This says a Person can be added to something else and it'll produce another person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
+Now, this is a bad and insufficient definition for a million different reasons, but it's good enough for teaching.
+This says a Person can be added to something else and it'll produce another Person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
 
-In a language like Scala (or Haskell or Rust) we'd declare this ability-to-add externally.
+In a language like Scala (or Haskell or Rust), we'd declare this ability-to-add externally.
 #+begin_src scala
 trait Addable[T] {
-  def add(left: T, right: T);
+  def add(left: T, right: T)
 }
 
 case class Person(name: String, age: String, parents: List[Person])
@@ -39,12 +39,12 @@ Now, anywhere I need some type which can be added I can pass around Person insta
 
 One thing I like about Scala's implementation is you can have *multiple* implementations of Addable[T] for any type T. This is explicitly disallowed in Haskell and Rust for coherence and optimization reasons.
 
-In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!*. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
+In Scala, these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even *attach behavior to the behavior!* (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
 
 
 * Summoners in Scala
 
-In Scala I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes I'll define my own and call it `summon`.
+In Scala, I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes, I'll define my own and call it `summon`.
 #+begin_src scala
 def summon[T](implicit t: T) = t
 #+end_src
@@ -83,7 +83,7 @@ It can be read as "From the type i32 give me the behavior for how to multiply it
 
 Notice I am *required* to immediately invoke mul and index. I am not able to save the typeclass instance itself into a variable.
 
-In both Scala and Rust I'm not allowed to summon a typeclass that does not exist.
+In both Scala and Rust, I'm not allowed to summon a typeclass that does not exist.
 
 #+begin_src rust
 <i32 as Mul<Boolean>>::mul(2, True); // *fails*

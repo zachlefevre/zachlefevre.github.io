@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-08-19 Mon 10:56 -->
+<!-- 2024-08-19 Mon 22:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -200,34 +200,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org3880c4b">1. Introduction</a>
+<li><a href="#orgde466c8">1. Introduction</a>
 <ul>
-<li><a href="#org50b70d8">1.1. What is a Typeclass?</a></li>
+<li><a href="#org014605e">1.1. What is a Typeclass?</a></li>
 </ul>
 </li>
-<li><a href="#org46c3bf9">2. Summoners in Scala</a></li>
-<li><a href="#org0354e2a">3. Summoners in Rust</a></li>
+<li><a href="#org3335f1b">2. Summoners in Scala</a></li>
+<li><a href="#orga229cd2">3. Summoners in Rust</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3880c4b" class="outline-2">
-<h2 id="org3880c4b"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgde466c8" class="outline-2">
+<h2 id="orgde466c8"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-In typeclass oriented languages there exist a concept called a Summoner.
+In typeclass oriented languages, there exists a concept called a Summoner.
 A Summoner is something which can fetch a typeclass from the environment.
 </p>
 </div>
 
-<div id="outline-container-org50b70d8" class="outline-3">
-<h3 id="org50b70d8"><span class="section-number-3">1.1.</span> What is a Typeclass?</h3>
+<div id="outline-container-org014605e" class="outline-3">
+<h3 id="org014605e"><span class="section-number-3">1.1.</span> What is a Typeclass?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 A typeclass is a unit of behavior which is <b>attached to a piece of data externally</b>.
 </p>
 
 <p>
-For example, in Python I might say something supports + by defining <span class="underline"><span class="underline">add</span></span>
+For example, in Python I might say something supports + by defining <code class="src src-rust">__add__</code>.
 </p>
 
 <div class="org-src-container">
@@ -243,16 +243,16 @@ For example, in Python I might say something supports + by defining <span class=
 </div>
 
 <p>
-Now, this is a bad and insufficient definition for a million different reasons, but its good enough for teaching.
-This says a Person can be added to something else and it'll produce another person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
+Now, this is a bad and insufficient definition for a million different reasons, but it's good enough for teaching.
+This says a Person can be added to something else and it'll produce another Person whose parents are the operands to the add operation. (It also says all children are named Jeremy.)
 </p>
 
 <p>
-In a language like Scala (or Haskell or Rust) we'd declare this ability-to-add externally.
+In a language like Scala (or Haskell or Rust), we'd declare this ability-to-add externally.
 </p>
 <div class="org-src-container">
 <pre class="src src-scala">trait Addable[T] {
-  def add(left: T, right: T);
+  def add(left: T, right: T)
 }
 
 case class Person(name: String, age: String, parents: List[Person])
@@ -271,18 +271,18 @@ One thing I like about Scala's implementation is you can have <b>multiple</b> im
 </p>
 
 <p>
-In Scala these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even <b>attach behavior to the behavior!</b>. (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
+In Scala, these little units of behavior (i.e. our Addable[Person]) are just objects with functions on them. They're first class. They can be passed into functions and manipulated themselves. The behavior is itself expressed as data. I could even <b>attach behavior to the behavior!</b> (i.e. What does it mean to add Addables? What would it look like to define Addable[Addable[T]]?) We can find ourselves deep in recursive strange loops pretty quick.
 </p>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org46c3bf9" class="outline-2">
-<h2 id="org46c3bf9"><span class="section-number-2">2.</span> Summoners in Scala</h2>
+<div id="outline-container-org3335f1b" class="outline-2">
+<h2 id="org3335f1b"><span class="section-number-2">2.</span> Summoners in Scala</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-In Scala I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes I'll define my own and call it `summon`.
+In Scala, I can fetch the behavior for any particular type with `Implicitly`. For teaching purposes, I'll define my own and call it `summon`.
 </p>
 <div class="org-src-container">
 <pre class="src src-scala">def summon[T](implicit t: T) = t
@@ -305,8 +305,8 @@ Notice that since personAddable is just a trait instance (just a regular ol' obj
 </div>
 </div>
 
-<div id="outline-container-org0354e2a" class="outline-2">
-<h2 id="org0354e2a"><span class="section-number-2">3.</span> Summoners in Rust</h2>
+<div id="outline-container-orga229cd2" class="outline-2">
+<h2 id="orga229cd2"><span class="section-number-2">3.</span> Summoners in Rust</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Things are a little different in Rust. Rust does not support first class typeclasses. I cannot pass around typeclass instances as data, I cannot define multiple implementations of a typeclass for any single type, nor can I define typeclasses over typeclass instances.
@@ -337,7 +337,7 @@ Notice I am <b>required</b> to immediately invoke mul and index. I am not able t
 </p>
 
 <p>
-In both Scala and Rust I'm not allowed to summon a typeclass that does not exist.
+In both Scala and Rust, I'm not allowed to summon a typeclass that does not exist.
 </p>
 
 <div class="org-src-container">
@@ -349,7 +349,7 @@ In both Scala and Rust I'm not allowed to summon a typeclass that does not exist
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Zlef</p>
-<p class="date">Created: 2024-08-19 Mon 10:56</p>
+<p class="date">Created: 2024-08-19 Mon 22:17</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
