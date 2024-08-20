@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-08-20 Tue 10:14 -->
+<!-- 2024-08-20 Tue 18:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
-<meta name="author" content="Zlef" />
+<meta name="author" content="zlef" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -200,24 +200,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org792ab75">1. Introduction</a>
+<li><a href="#org3f61482">1. Introduction</a>
 <ul>
-<li><a href="#org948e633">1.1. What is Laziness?</a></li>
-<li><a href="#org4947b73">1.2. Separating generation from exploration</a></li>
+<li><a href="#orgb79bf2c">1.1. What is Laziness?</a></li>
+<li><a href="#org53aafbf">1.2. Separating generation from exploration</a></li>
 </ul>
 </li>
-<li><a href="#org1f2cb32">2. Lazy Fib</a></li>
-<li><a href="#org3677b6c">3. Lazy Stock Picker Using Kadane's Algorithm</a></li>
-<li><a href="#orgc2c3665">4. Alright, here comes the manifesto</a></li>
+<li><a href="#org8135003">2. Lazy Fib</a></li>
+<li><a href="#org874639d">3. Lazy Stock Picker Using Kadane's Algorithm</a></li>
+<li><a href="#org1687104">4. Alright, here comes the manifesto</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org792ab75" class="outline-2">
-<h2 id="org792ab75"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-org3f61482" class="outline-2">
+<h2 id="org3f61482"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org948e633" class="outline-3">
-<h3 id="org948e633"><span class="section-number-3">1.1.</span> What is Laziness?</h3>
+<div id="outline-container-orgb79bf2c" class="outline-3">
+<h3 id="orgb79bf2c"><span class="section-number-3">1.1.</span> What is Laziness?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Laziness is a langauge feature which allows programs to express suspended computation.
@@ -237,7 +237,7 @@ For example
 </div>
 
 <p>
-Notice in the second example we do not perform the expensive computation. We can, in fact, choose to <b>never</b> perform the expensive computation.
+Notice in the second example, we do not perform the expensive computation. We can, in fact, choose to <b>never</b> perform the expensive computation.
 There are many situations where we otherwise throw out expensive computation.
 </p>
 
@@ -263,13 +263,16 @@ It would have been better to <b>not</b> perform the expensive computation and, i
 </p>
 
 <p>
-The motivating example being &#x2013; Functions are simply called. A function does not have the context to know when the work it's doing will <b>actually</b> be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the <b>caller</b> can decide if the computation needs to happen. As it goes the caller can itself decide that it is not qualified to decide it the expensive computation needs to happen, and so forth until the some root executive function, which knows <b>precisely what results are needed to produce the program output</b>, decides what computation needs to take place.
-If you take this idea to the logical extreme <b>everything</b> ends up being a lazy suspended computation and your langauge is itself <b>lazy</b>. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
+The motivating example being &#x2013; Functions are simply called. A function does not have the context to know when the work it's doing will <b>actually</b> be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the <b>caller</b> can decide if the computation needs to happen. As it goes, the caller can itself decide that it is not qualified to decide if the expensive computation needs to happen. In fact <b>every caller</b> up the call stack decides the same thing until the root executive function (which knows <b>precisely what results are needed to produce the program output</b>) decides what computation needs to take place.
+</p>
+
+<p>
+If you take this idea to the logical extreme, <b>everything</b> ends up being a lazy suspended computation and your langauge is itself <b>lazy</b>. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
 </p>
 
 <p>
 Another motivating example would be &#x2013; Functions do not necessarily have the context to decide <b>where</b> computation should take place. Is it better to perform this work on my primary thread pool? What about my UI event loop? Functions should <b>do or delgate but never both</b>.
-some<sub>really</sub><sub>expensive</sub><sub>computation</sub> is <b>doing</b> the work. It should not be polluted with arguments to also inform it <b>where</b> the work should happen. Otherwise we end up with really ugly signatures like:
+some<sub>really</sub><sub>expensive</sub><sub>computation</sub> is <b>doing</b> the work. It should not be polluted with arguments to also inform it <b>where</b> the work should happen. Otherwise, we end up with really ugly signatures like:
 </p>
 
 <div class="org-src-container">
@@ -283,8 +286,8 @@ Not to mention it has to actually <b>do the work</b>. We've overloaded this func
 </div>
 </div>
 
-<div id="outline-container-org4947b73" class="outline-3">
-<h3 id="org4947b73"><span class="section-number-3">1.2.</span> Separating generation from exploration</h3>
+<div id="outline-container-org53aafbf" class="outline-3">
+<h3 id="org53aafbf"><span class="section-number-3">1.2.</span> Separating generation from exploration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Maybe that last motivating example was not very motivating. I don't blame you. Here's something more concrete.
@@ -318,14 +321,14 @@ Not only that, but this function is not able to accomodate the various needs of 
 </ul>
 
 <p>
-Ideally we will have one mechanism for generating fibs and another <b>separate</b> mechanism for exploring that generated space and doing whatever it wants with the results.
+Ideally, we will have one mechanism for generating fibs and another <b>separate</b> mechanism for exploring that generated space and doing whatever it wants with the results.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1f2cb32" class="outline-2">
-<h2 id="org1f2cb32"><span class="section-number-2">2.</span> Lazy Fib</h2>
+<div id="outline-container-org8135003" class="outline-2">
+<h2 id="org8135003"><span class="section-number-2">2.</span> Lazy Fib</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-python">def fibs(amount):
@@ -348,8 +351,8 @@ The generator (the fib function itself) does its single job really well. It gene
 </div>
 </div>
 
-<div id="outline-container-org3677b6c" class="outline-2">
-<h2 id="org3677b6c"><span class="section-number-2">3.</span> Lazy Stock Picker Using Kadane's Algorithm</h2>
+<div id="outline-container-org874639d" class="outline-2">
+<h2 id="org874639d"><span class="section-number-2">3.</span> Lazy Stock Picker Using Kadane's Algorithm</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Suppose we want to compute the best time to have purchased and sold a stock. The usual implementation is Kadane's Algorithm. 
@@ -375,15 +378,15 @@ Here the caller can:
 <li><b>Observe</b> how the algorithm runs. What decisions did it make along the way?</li>
 <li><b>Decide</b> to stop iterating when a particular threshold was met.</li>
 <li>Choose to pack the result set into a list for later processing.</li>
-<li>Choose to pack the reuslt into a dictionary/any other data struture.</li>
+<li>Choose to pack the reuslt into a dictionary/any other data struture <b>without</b> incurring the cost of first packing it into a list.</li>
 <li>Choose to only select the best buy and sell date without incurring any additional memory cost.</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgc2c3665" class="outline-2">
-<h2 id="orgc2c3665"><span class="section-number-2">4.</span> Alright, here comes the manifesto</h2>
+<div id="outline-container-org1687104" class="outline-2">
+<h2 id="org1687104"><span class="section-number-2">4.</span> Alright, here comes the manifesto</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Functions <b>cannot</b> know the context they're running in.
@@ -394,22 +397,33 @@ Functions need to be able to compose with other behavior without being polluted 
 </p>
 
 <p>
-As a caller I should be able to decide, dynamically, what <b>effects</b> the sub-computations of my callees run in:
+As a caller I should be able to decide, dynamically, what <b>effects</b> the sub-computations my callees run in:
 </p>
 <ul class="org-ul">
 <li>What exception handlers are wrapping behavior</li>
 <li>What thread pool the computation runs in</li>
 <li>What dependencies the computation runs with</li>
 </ul>
+
 <p>
-And it should be able to do wo without polluting that function with all the parameters required to make all those decisions itself.
+And it should be able to do so without polluting that function with all the parameters required to make all those decisions itself.
 </p>
+
+
+<pre class="example">
+ _____                 . . . . . o o o o o
+  __|[_]|__ ___________ _______    ____      o
+ |[] [] []| [] [] [] [] [_____(__  ][]]_n_n__][.
+_|________|_[_________]_[________]_|__|________)&lt;
+  oo    oo 'oo      oo ' oo    oo 'oo 0000---oo\_
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</pre>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Zlef</p>
-<p class="date">Created: 2024-08-20 Tue 10:14</p>
+<p class="author">Author: zlef</p>
+<p class="date">Created: 2024-08-20 Tue 18:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

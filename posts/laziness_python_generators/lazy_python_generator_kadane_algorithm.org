@@ -13,7 +13,7 @@ a = some_really_expensive_computation() # This is *not* lazy
 a = lambda: some_really_expensive_computation() # This *is* lazy
 #+end_src
 
-Notice in the second example we do not perform the expensive computation. We can, in fact, choose to *never* perform the expensive computation.
+Notice in the second example, we do not perform the expensive computation. We can, in fact, choose to *never* perform the expensive computation.
 There are many situations where we otherwise throw out expensive computation.
 
 For example
@@ -30,11 +30,12 @@ Notice we've *performed* the expensive computation even though, under some condi
 
 It would have been better to *not* perform the expensive computation and, instead, saved a *suspended computation* that can be reified later *IFF* it is wanted. 
 
-The motivating example being -- Functions are simply called. A function does not have the context to know when the work it's doing will *actually* be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the *caller* can decide if the computation needs to happen. As it goes the caller can itself decide that it is not qualified to decide it the expensive computation needs to happen, and so forth until the some root executive function, which knows *precisely what results are needed to produce the program output*, decides what computation needs to take place.
-If you take this idea to the logical extreme *everything* ends up being a lazy suspended computation and your langauge is itself *lazy*. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
+The motivating example being -- Functions are simply called. A function does not have the context to know when the work it's doing will *actually* be used or if it'll be thrown away. It's better to produce cheap handles to suspended computation which can be reified so the *caller* can decide if the computation needs to happen. As it goes, the caller can itself decide that it is not qualified to decide if the expensive computation needs to happen. In fact *every caller* up the call stack decides the same thing until the root executive function (which knows *precisely what results are needed to produce the program output*) decides what computation needs to take place.
+
+If you take this idea to the logical extreme, *everything* ends up being a lazy suspended computation and your langauge is itself *lazy*. Examples include Haskell, Nix, and some isolated parts of Rust and Python.
 
 Another motivating example would be -- Functions do not necessarily have the context to decide *where* computation should take place. Is it better to perform this work on my primary thread pool? What about my UI event loop? Functions should *do or delgate but never both*.
-some_really_expensive_computation is *doing* the work. It should not be polluted with arguments to also inform it *where* the work should happen. Otherwise we end up with really ugly signatures like:
+some_really_expensive_computation is *doing* the work. It should not be polluted with arguments to also inform it *where* the work should happen. Otherwise, we end up with really ugly signatures like:
 
 #+begin_src python
 def some_really_expensive_computation(thread_pool, condition_under_which_we_run_on_main_pool, condition_under_which_we_run_on_IO_bound_pool, some_predicate_to_decide_if_main_pool_is_overloaded, etc...):
@@ -66,7 +67,7 @@ Not only that, but this function is not able to accomodate the various needs of 
 - A caller which generates 10 fibs, then later decides it needed 20, will need to throw away the 10 and start the computation over.
 - etc
 
-Ideally we will have one mechanism for generating fibs and another *separate* mechanism for exploring that generated space and doing whatever it wants with the results.
+Ideally, we will have one mechanism for generating fibs and another *separate* mechanism for exploring that generated space and doing whatever it wants with the results.
 
 * Lazy Fib
 #+begin_src python
@@ -101,7 +102,7 @@ Here the caller can:
 - *Observe* how the algorithm runs. What decisions did it make along the way?
 - *Decide* to stop iterating when a particular threshold was met.
 - Choose to pack the result set into a list for later processing.
-- Choose to pack the reuslt into a dictionary/any other data struture.
+- Choose to pack the reuslt into a dictionary/any other data struture *without* incurring the cost of first packing it into a list.
 - Choose to only select the best buy and sell date without incurring any additional memory cost.
 
 
@@ -111,8 +112,19 @@ Functions *cannot* know the context they're running in.
 
 Functions need to be able to compose with other behavior without being polluted with that other behavior's details.
 
-As a caller I should be able to decide, dynamically, what *effects* the sub-computations of my callees run in:
+As a caller I should be able to decide, dynamically, what *effects* the sub-computations my callees run in:
 - What exception handlers are wrapping behavior
 - What thread pool the computation runs in
 - What dependencies the computation runs with
-And it should be able to do wo without polluting that function with all the parameters required to make all those decisions itself.
+
+And it should be able to do so without polluting that function with all the parameters required to make all those decisions itself.
+
+
+#+begin_src
+ _____                 . . . . . o o o o o
+  __|[_]|__ ___________ _______    ____      o
+ |[] [] []| [] [] [] [] [_____(__  ][]]_n_n__][.
+_|________|_[_________]_[________]_|__|________)<
+  oo    oo 'oo      oo ' oo    oo 'oo 0000---oo\_
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#+end_src
