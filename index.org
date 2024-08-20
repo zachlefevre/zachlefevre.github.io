@@ -3,3 +3,6 @@
 * Posts
 ** [[file:posts/type_state/type_state.html][Type State]]
 ** [[file:posts/summoners/summoners.html][Typeclass Summoners in Rust and Scala]]
+* Myself
+** [[https://github.com/zachlefevre][github]]
+** email: public@zacharylefevre.com
