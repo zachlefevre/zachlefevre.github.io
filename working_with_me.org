@@ -1,0 +1,78 @@
+** What brings me energy at work?
+- A really tricky problem. Grasping the edge of a solution to a complicated problem.
+- Using the tools I love. Using tools I'm good at and moving at the speed of thought.
+
+** What drains me at work?
+- Using bad tools. There's nothing I hate more than using tools built by people who do not care for me.
+- Not being able to help. I want to mentor and help people. I like talking about my favorite languages and tools. Other folks not being interested in learning new things makes me frustrated.
+
+** How I collaborate?
+- We pair over a shared screen and push one another to greater levels of depth
+- We are both focused. We take breaks as opposed to working unfocused.
+- We take turns changing who drives. I have a habit of driving too much, which is not good.
+
+** Preferred communication channels?
+- On a video call with a shared whiteboard/buffer between us.
+
+** After Hours communication
+- Text me, otherwise I won't see it.
+- Honestly, please don't.
+
+** A typical day for me looks like...
+- I wake up at 6 and make coffee. I see Sarah off to work. I finish whatever chapter I fell asleep reading.
+- I study Anki and take Samuel on a walk. I get to work around 9 with Teams off. I do work until 11AM and then turn Teams on.
+- I work in 90 minute chunks. Every 90 minutes I walk away from the computer for ~ 20 minutes. I come back, check Teams, and then turn it off and get back to work.
+- I work until ~ 5 PM and then shut work off.
+- I try to write some open open source and catch up on RSS.
+
+** My expectations of you
+- I want you to be curious and want to learn. I want you to spend a not-insignificant amount of your day learning something new.
+- I don't want you to *work on yourself*. I don't want to hear you complain about a thing you're not actively trying to fix.
+- I want you to have empathy. I don't want to hear you complain about a person when a system is to blame.
+- I want you to meet folks where they're at. Most people are effectively the same, just less lucky versions, of you and I. Interpret people in the best possible light.
+
+** Challenge me when
+- I've been mean or inappropriate. I've talked over someone.
+- *I've made somebody feel stupid or inadequate*
+- I've stumbled overmyself and not presented myself clearly.
+
+** How I appreciate feedback
+- Directly and without fluff. "In the last meeting you seemed unprepared."
+- Not over text. A lot of nuanced is lost in text. I want to hear and see you.
+
+** My development
+- I'm trying to let people fail more. Everything I like about myself has come from making a jackass of myself. Others should be able to do the same thing without being shunned.
+- I'm trying to let other people be less optimal. Folks need to *feel*, not just learn, how to do the thing. Teach a man to fish and all that.
+- I am bad at small talk. I'd like to be able to talk to a stranger.
+- Inferiority/imposter syndrome.
+
+** Interests:
+
+*** Some fun facts about me
+- My ham radio license is KJ5CGZ
+- I drive a 1995 geotracker
+- Sarah makes fun of me for not being able to use a computer -- I basically can't use a computer without a split keyboard 
+
+*** My pasions outside of work
+- Books
+- Recreational coding
+- *Backpacking* and camping
+
+*** Some pet peeves
+- Inflexibility
+- Being judgemental to people
+- Folks wanting control/micromanaging
+
+*** My superpowers
+- Anki
+- Emacs
+- Patience
+
+** My favorite quote(s):
+
+Syntactic sugar causes cancer of the semicolon -- Alan Perlis
+
+"The truth about the world, he said, is that anything is possible. Had you not seen it all from birth and thereby bled it of its strangeness it would appear to you for what it is, a hat trick in a medicine show, a fevered dream, a trance bepopulate with chimeras having neither analogue nor precedent, an itinerant carnival, a migratory tentshow whose ultimate destination after many a pitch in many a mudded field is unspeakable and calamitous beyond reckoning.
+
+The universe is no narrow thing and the order within it is not constrained by any latitude in its conception to repeat what exists in one part in any other part. Even in this world more things exist without our knowledge than with it and the order in creation which you see is that which you have put there, like a string in a maze, so that you shall not lose your way. For existence has its own order and that no man's mind can compass, that mind itself being but a fact among others."
+ -- Cormac McCarthy
