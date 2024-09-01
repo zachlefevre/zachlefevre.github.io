@@ -26,8 +26,9 @@
 - I try to write some open open source and catch up on RSS.
 
 ** My expectations of you
-- I want you to be curious and want to learn. I want you to spend a not-insignificant amount of your day learning something new.
-- I don't want you to *work on yourself*. I don't want to hear you complain about a thing you're not actively trying to fix.
+- I want to hear about what you've learned lately
+- I want you to ask questions when learning something new
+- I want you to *work on yourself*. I don't want to hear you complain about a thing you're not actively trying to fix.
 - I want you to have empathy. I don't want to hear you complain about a person when a system is to blame.
 - I want you to meet folks where they're at. Most people are effectively the same, just less lucky versions, of you and I. Interpret people in the best possible light.
 
@@ -38,13 +39,14 @@
 
 ** How I appreciate feedback
 - Directly and without fluff. "In the last meeting you seemed unprepared."
-- Not over text. A lot of nuanced is lost in text. I want to hear and see you.
+- Not over text. A lot of nuance is lost in text. I want to hear and see you.
 
 ** My development
 - I'm trying to let people fail more. Everything I like about myself has come from making a jackass of myself. Others should be able to do the same thing without being shunned.
 - I'm trying to let other people be less optimal. Folks need to *feel*, not just learn, how to do the thing. Teach a man to fish and all that.
 - I am bad at small talk. I'd like to be able to talk to a stranger.
 - Inferiority/imposter syndrome.
+- Grammar.
 
 ** Interests:
 
@@ -53,7 +55,7 @@
 - I drive a 1995 geotracker
 - Sarah makes fun of me for not being able to use a computer -- I basically can't use a computer without a split keyboard 
 
-*** My pasions outside of work
+*** My passions outside of work
 - Books
 - Recreational coding
 - *Backpacking* and camping
