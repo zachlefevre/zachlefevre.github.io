@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-08-20 Tue 18:32 -->
+<!-- 2024-11-01 Fri 17:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
-<meta name="author" content="zlef" />
+<meta name="author" content="Zlef" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -200,24 +200,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org3f61482">1. Introduction</a>
+<li><a href="#orgf49be30">1. Introduction</a>
 <ul>
-<li><a href="#orgb79bf2c">1.1. What is Laziness?</a></li>
-<li><a href="#org53aafbf">1.2. Separating generation from exploration</a></li>
+<li><a href="#orgfdaf6c3">1.1. What is Laziness?</a></li>
+<li><a href="#org22860fd">1.2. Separating generation from exploration</a></li>
 </ul>
 </li>
-<li><a href="#org8135003">2. Lazy Fib</a></li>
-<li><a href="#org874639d">3. Lazy Stock Picker Using Kadane's Algorithm</a></li>
-<li><a href="#org1687104">4. Alright, here comes the manifesto</a></li>
+<li><a href="#orgfb1a8a0">2. Lazy Fib</a></li>
+<li><a href="#org91d6ad3">3. Lazy Stock Picker Using Kadane's Algorithm</a></li>
+<li><a href="#orgcb6cba1">4. Alright, here comes the manifesto</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3f61482" class="outline-2">
-<h2 id="org3f61482"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgf49be30" class="outline-2">
+<h2 id="orgf49be30"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgb79bf2c" class="outline-3">
-<h3 id="orgb79bf2c"><span class="section-number-3">1.1.</span> What is Laziness?</h3>
+<div id="outline-container-orgfdaf6c3" class="outline-3">
+<h3 id="orgfdaf6c3"><span class="section-number-3">1.1.</span> What is Laziness?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Laziness is a langauge feature which allows programs to express suspended computation.
@@ -286,8 +286,8 @@ Not to mention it has to actually <b>do the work</b>. We've overloaded this func
 </div>
 </div>
 
-<div id="outline-container-org53aafbf" class="outline-3">
-<h3 id="org53aafbf"><span class="section-number-3">1.2.</span> Separating generation from exploration</h3>
+<div id="outline-container-org22860fd" class="outline-3">
+<h3 id="org22860fd"><span class="section-number-3">1.2.</span> Separating generation from exploration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Maybe that last motivating example was not very motivating. I don't blame you. Here's something more concrete.
@@ -327,8 +327,8 @@ Ideally, we will have one mechanism for generating fibs and another <b>separate<
 </div>
 </div>
 
-<div id="outline-container-org8135003" class="outline-2">
-<h2 id="org8135003"><span class="section-number-2">2.</span> Lazy Fib</h2>
+<div id="outline-container-orgfb1a8a0" class="outline-2">
+<h2 id="orgfb1a8a0"><span class="section-number-2">2.</span> Lazy Fib</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-python">def fibs(amount):
@@ -351,8 +351,8 @@ The generator (the fib function itself) does its single job really well. It gene
 </div>
 </div>
 
-<div id="outline-container-org874639d" class="outline-2">
-<h2 id="org874639d"><span class="section-number-2">3.</span> Lazy Stock Picker Using Kadane's Algorithm</h2>
+<div id="outline-container-org91d6ad3" class="outline-2">
+<h2 id="org91d6ad3"><span class="section-number-2">3.</span> Lazy Stock Picker Using Kadane's Algorithm</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Suppose we want to compute the best time to have purchased and sold a stock. The usual implementation is Kadane's Algorithm. 
@@ -362,12 +362,12 @@ Suppose we want to compute the best time to have purchased and sold a stock. The
 Here I'll implement it lazily using suspended computation
 </p>
 <div class="org-src-container">
-<pre class="src src-python">def stock_pick(prices):
+<pre class="src src-python">def stock_pick(stocks):
     buy_date = 0
     for sell_date in range(len(stocks)):
-        if stocks[sell_date] &lt; stocks[buy_date]:
-            sell_date = buy_date
-        yield sell_date, buy_date
+        if stocks[sell_date] &lt;= stocks[buy_date]:
+            buy_date = sell_date
+        yield buy_date, sell_date
 </pre>
 </div>
 
@@ -385,8 +385,8 @@ Here the caller can:
 </div>
 
 
-<div id="outline-container-org1687104" class="outline-2">
-<h2 id="org1687104"><span class="section-number-2">4.</span> Alright, here comes the manifesto</h2>
+<div id="outline-container-orgcb6cba1" class="outline-2">
+<h2 id="orgcb6cba1"><span class="section-number-2">4.</span> Alright, here comes the manifesto</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Functions <b>cannot</b> know the context they're running in.
@@ -422,8 +422,8 @@ _|________|_[_________]_[________]_|__|________)&lt;
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: zlef</p>
-<p class="date">Created: 2024-08-20 Tue 18:32</p>
+<p class="author">Author: Zlef</p>
+<p class="date">Created: 2024-11-01 Fri 17:52</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

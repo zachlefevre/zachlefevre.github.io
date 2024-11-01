@@ -90,13 +90,15 @@ Suppose we want to compute the best time to have purchased and sold a stock. The
 
 Here I'll implement it lazily using suspended computation
 #+begin_src python
-def stock_pick(prices):
+def stock_pick(stocks):
     buy_date = 0
     for sell_date in range(len(stocks)):
-        if stocks[sell_date] < stocks[buy_date]:
-            sell_date = buy_date
-        yield sell_date, buy_date
+        if stocks[sell_date] <= stocks[buy_date]:
+            buy_date = sell_date
+        yield buy_date, sell_date
 #+end_src
+
+#+RESULTS:
 
 Here the caller can:
 - *Observe* how the algorithm runs. What decisions did it make along the way?
