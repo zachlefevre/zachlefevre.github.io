@@ -7,3 +7,20 @@
 * Myself
 ** [[https://github.com/zachlefevre][github]]
 ** email: public@zacharylefevre.com
+** public key
+#+begin_src 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEaAvXthYJKwYBBAHaRw8BAQdA6mbEZDRdG7gVIWrgCfAz7ViAWus4hD7NsE66
+HTuiQ+60J1phY2hhcnkgTGVGZXZyZSA8bWVAemFjaGFyeWxlZmV2cmUuY29tPoiZ
+BBMWCgBBFiEEfaBN4Qv7eoVSlNUpBy2okjtFrDYFAmgL17YCGwMFCQWjmoAFCwkI
+BwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQBy2okjtFrDapTAD/TjIv35R/nF8m
+x4NGWnmL0KBXymkPXYJpjZJiJQrAH1MBAIAK46vVSAKYcSacnrVInIOK/baxf/5w
++GVUcKk6zGAHuDgEaAvXthIKKwYBBAGXVQEFAQEHQE7nzc/8m8znZa5jtp+97xiF
+kUqEGAN6IY1s0mopVLlAAwEIB4h+BBgWCgAmFiEEfaBN4Qv7eoVSlNUpBy2okjtF
+rDYFAmgL17YCGwwFCQWjmoAACgkQBy2okjtFrDZ5pAD/WdlCQidUW7JAE02kXP52
+M1gcABgxBNd9ImBI0xJBZDoA/0cAECjuuIwMzQFGsn/M8wMTj1tSVzqvmKD0JOgx
+jToI
+=fdqJ
+-----END PGP PUBLIC KEY BLOCK-----
+#+end_src
